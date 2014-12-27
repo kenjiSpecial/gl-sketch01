@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ks-gl-sketch04 Examples</title>
+    <script id="2d-vertex-shader" type="x-shader/x-vertex">
+    attribute vec2 a_position;
+    attribute vec3 a_color;
+
+    uniform vec2 u_resolution;
+
+    varying vec4 vColor;
+
+    void main() {
+       vColor = vec4(a_color, 1.0);
+
+       vec2 zeroToOne = a_position / u_resolution;
+       zeroToOne.y = 1.0 - zeroToOne.y ;
+       vec2 zeroToTwo = zeroToOne * 2.0;
+       vec2 clipSpace = zeroToTwo - 1.0;
+       gl_Position = vec4(clipSpace, 0.0, 1.0);
+       gl_PointSize =2.0;
+    }
+    </script>
+    <!-- fragment shader -->
+    <script id="2d-fragment-shader" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec4 vColor;
+
+    void main() {
+       gl_FragColor = vColor;
+    }
+    </script>
+</head>
+<body>
+<canvas id="c"> </canvas>
+<script type="text/javascript" src="ks-gl-sketch04.js"></script>
+</body>
+</html>
